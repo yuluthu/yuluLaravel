@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/error', function () {
-    throw new Exception('Testing', 500);
+    throw new Exception('tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'), 500);
 });
