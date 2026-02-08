@@ -3,6 +3,7 @@
 use Monolog\Handler\NullHandler;
 use Monolog\Handler\StreamHandler;
 use Monolog\Handler\SyslogUdpHandler;
+use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
 
@@ -37,7 +38,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['single', 'papertrail'],
             'ignore_exceptions' => false,
         ],
 
@@ -64,12 +65,14 @@ return [
 
         'papertrail' => [
             'driver' => 'monolog',
-            'level' => 'debug',
+            'level' => env('LOG_LEVEL', 'debug'),
             'handler' => SyslogUdpHandler::class,
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
+            'processors' => [PsrLogMessageProcessor::class],
         ],
 
         'stderr' => [
