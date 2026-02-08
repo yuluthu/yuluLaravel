@@ -18,5 +18,5 @@ Route::get('/', function () {
 });
 
 Route::get('/error', function () {
-    throw new Exception('Testing', 500);
+    Log::info('Testing papertrail');
 });
