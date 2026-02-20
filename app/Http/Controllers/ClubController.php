@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreclubRequest;
-use App\Http\Requests\UpdateclubRequest;
+use App\Http\Requests\Clubs\StoreClubRequest;
+use App\Http\Requests\Clubs\UpdateClubRequest;
 use App\Club;
 
 class ClubController extends Controller
@@ -13,23 +13,18 @@ class ClubController extends Controller
      */
     public function index()
     {
-        return Club::where('active', 1)->orderBy('name');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json(Club::where('active', 1)->orderBy('name')->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreclubRequest $request)
+    public function store(StoreClubRequest $request)
     {
-        //
+        $club = Club::factory()->make($request->input('data'));
+        $club->save();
+
+        return $club;
     }
 
     /**
@@ -37,23 +32,20 @@ class ClubController extends Controller
      */
     public function show(club $club)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(club $club)
-    {
-        //
+        return $club;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateclubRequest $request, club $club)
+    public function update(UpdateClubRequest $request, club $club)
     {
-        //
+        $club->update($request->input('data'));
+
+        if ($club->isDirty()) {
+            $club->save();
+        }
+        return $club;
     }
 
     /**
