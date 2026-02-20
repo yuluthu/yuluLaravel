@@ -1,10 +1,8 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Games;
 
-use Illuminate\Foundation\Http\FormRequest;
-
-class UpdatetournamentRequest extends FormRequest
+class UpdateGameRequest extends BaseGameRequest
 {
     /**
      * Determine if the user is authorized to make this request.

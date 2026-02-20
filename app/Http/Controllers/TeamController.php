@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreteamRequest;
-use App\Http\Requests\UpdateteamRequest;
-use App\team;
+use App\Club;
+use App\Http\Requests\Teams\StoreTeamRequest;
+use App\Http\Requests\Teams\UpdateTeamRequest;
+use App\Team;
+use Illuminate\Support\Arr;
 
 class TeamController extends Controller
 {
@@ -13,53 +15,49 @@ class TeamController extends Controller
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return response()->json(Team::with('club')->orderBy('name')->get());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreteamRequest $request)
+    public function store(StoreTeamRequest $request)
     {
-        //
+        $requestData = Arr::except($request->input('data'), 'club');
+        $requestData['clubId'] = Club::findOrFail($request->input('data.club'));
+
+        $team = Team::factory()->make($requestData);
+        $team->save();
+
+        return $team;
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(team $team)
+    public function show(Team $team)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(team $team)
-    {
-        //
+        return $team;
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateteamRequest $request, team $team)
+    public function update(UpdateTeamRequest $request, Team $team)
     {
-        //
+        $team->update($request->input('data'));
+
+        if ($team->isDirty()) {
+            $team->save();
+        }
+
+        return $team;
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(team $team)
+    public function destroy(Team $team)
     {
         //
     }

@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Club;
 use App\Http\Requests\Clubs\StoreClubRequest;
 use App\Http\Requests\Clubs\UpdateClubRequest;
-use App\Club;
 
 class ClubController extends Controller
 {
@@ -13,7 +13,7 @@ class ClubController extends Controller
      */
     public function index()
     {
-        return response()->json(Club::where('active', 1)->orderBy('name')->get());
+        return response()->json(Club::with('teams')->where('active', 1)->orderBy('name')->get()->withRelationshipAutoloading());
     }
 
     /**
@@ -45,6 +45,7 @@ class ClubController extends Controller
         if ($club->isDirty()) {
             $club->save();
         }
+
         return $club;
     }
 

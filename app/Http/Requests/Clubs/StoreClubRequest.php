@@ -1,25 +1,16 @@
 <?php
 
-namespace App\Http\Requests;
-
-use App\Http\Requests\Clubs\BaseClubRequest;
+namespace App\Http\Requests\Clubs;
 
 class StoreClubRequest extends BaseClubRequest
 {
+    public const REQUEST_TYPE = 'storeClub';
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
         return true;
-    }
-    
-    public function messages()
-    {
-        return [
-            'data.name' => 'Another club with that name already exists',
-            'data.name.between' => 'Club name must be between :min and :max characters',
-            'data.clubType.required' => 'No club type was specified'
-        ];
     }
 }

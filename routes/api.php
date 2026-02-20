@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\ClubController;
+use App\Http\Controllers\GameController;
+use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TournamentController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ClubController;
-use App\Http\Controllers\TournamentController;
- 
 
 /*
 |--------------------------------------------------------------------------
@@ -24,4 +25,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::apiResources([
     'club' => ClubController::class,
     'tournament' => TournamentController::class,
+    'team' => TeamController::class,
+    'game' => GameController::class,
 ]);

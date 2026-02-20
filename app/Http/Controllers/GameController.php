@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoregameRequest;
-use App\Http\Requests\UpdategameRequest;
 use App\game;
+use App\Http\Requests\StoreGameRequest;
+use App\Http\Requests\UpdateGameRequest;
 
 class GameController extends Controller
 {
@@ -27,7 +27,7 @@ class GameController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoregameRequest $request)
+    public function store(StoreGameRequest $request)
     {
         //
     }
@@ -51,7 +51,7 @@ class GameController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdategameRequest $request, game $game)
+    public function update(UpdateGameRequest $request, game $game)
     {
         //
     }
