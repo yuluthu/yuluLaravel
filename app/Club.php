@@ -14,7 +14,6 @@ class Club extends Model
     protected $table = 'clubs';
 
     protected $fillable = ['name', 'clubType'];
-    x
     /**
      * Create a new factory instance for the model.
      */
