@@ -8,6 +8,11 @@ class BaseTournamentRequest extends FormRequest
 {
     public const REQUEST_TYPE = null;
 
+    public function authorize(): bool
+    {
+        return true;
+    }
+
     public function rules(): array
     {
         return [

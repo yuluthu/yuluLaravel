@@ -45,7 +45,12 @@ class TeamController extends Controller
      */
     public function update(UpdateTeamRequest $request, Team $team)
     {
-        $team->update($request->input('data'));
+        $requestData = Arr::except($request->input('data'), 'club');
+        if ($request->has('club')) {
+            $requestData['clubId'] = Club::findOrFail($request->input('data.club'))->id;
+        }
+
+        $team->update($requestData);
 
         if ($team->isDirty()) {
             $team->save();

@@ -3,10 +3,16 @@
 namespace App\Http\Requests\Teams;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class BaseTeamRequest extends FormRequest
 {
     public const REQUEST_TYPE = null;
+
+    public function authorize(): bool
+    {
+        return true;
+    }
 
     public function rules(): array
     {
@@ -16,9 +22,9 @@ class BaseTeamRequest extends FormRequest
             'data.name' => [
                 'required',
                 'between:5,255',
-                'unique:teams,name',
+                $this->team ? Rule::unique('teams', 'name')->ignore($this->team->id) : 'unique:teams,name',
             ],
-            'data.club' => 'required|integer',
+            'data.club' => 'sometimes'.(! $this->team ? '|required' : '').'|integer',
         ];
     }
 
